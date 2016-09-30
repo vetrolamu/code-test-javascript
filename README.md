@@ -1,6 +1,6 @@
-# devBuddies Code Test for JavScript
+# devBuddies Code Test for JavScript Ninjas
 
-# Your motivation
+## Your motivation
 
 Dear dev buddy, it's important to us to explain why we ask you to do this code test:
 
@@ -9,7 +9,7 @@ Dear dev buddy, it's important to us to explain why we ask you to do this code t
 * Your own your code! You can use it to pimp you github profile and to send it along for any companies you approach yourself
 * Last, we hope it will be fun!
 
-# Task
+## Task
 
 Bowling Challenge
 
