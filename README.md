@@ -1,4 +1,4 @@
-# devBuddies Code Test for JavScript Ninjas
+# devBuddies Code Test for JavaScript Ninjas
 
 ## Your motivation
 
