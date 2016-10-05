@@ -1,41 +1,48 @@
-# devBuddies Code Test for JavaScript Ninjas
+# Bowling Challenge
 
-## Your motivation
+## Goals
 
-Dear dev buddy, it's important to us to explain why we ask you to do this code test:
+1. Create Bowling scoring tool according to [requirements](./docs/REQUIREMENTS.md).
+2. Make it scalable and maintanable
+3. Deploy it somwhere (e.g. Heroku)
+4. Add some gamification features
+5. Have fun!
 
-* You help us and yourself to assess your level of coding skills and find the right position for you
-* We can pass it along in your introduction, which drastically increases your chances to be invited for an interview. The dev teams can review your code and get a first real impression
-* Your own your code! You can use it to pimp you github profile and to send it along for any companies you approach yourself
-* Last, we hope it will be fun!
+## Instructions
 
-## Task
+#### Installation
 
-Bowling Challenge
+```bash
+npm install
+```
 
-* Please clone this repository in GitHub (or similar) and invite us, so that we can follow your progress.
-* The implementation should use "vanilla" JavaScript (no libraries or frameworks). But if you feel strongly to use react.js - go for it ;)
-* Remember that we are more interested how you approach this problem than completing all the features (if you don't have enough time explain how you would progress).
+#### Development
 
-Minimum (keep in mind the optional requirements):
+```bash
+npm run dev
+```
 
- * Implement a scoring system for a bowling game according to these rules:
-  - A game consists of 10 frames.
-  - In general each frame has 2 rolls.
-  - In general a player scores the number of pins knocked down.
-  - If the player knocks down all 10 pins on the first roll it’s a strike. The player scores 10 plus the number of pins knocked down in the next two rolls.
-  - If the player knocks down all 10 pins in two rolls it’s a spare. The player scores 10 plus the number of pins knocked down in the next roll.
-* Simple visualisation of the game.
+## Why React
 
-Optional:
+You do not need any libraries or tools for implementation of base requirements. For business logic 
+you can simply use the module pattern.
 
-* Add support for the last frame in the game:
- - The player gets additional rolls in the last frame: one additional for a spare after the second roll or two extra rolls for a strike.
-* Create a method that randomly throws a roll (one roll is 1-10 pins knocked down), and progresses the scoring.
-* Support multiple players.
-* Or anything fun you can think of :)
+Disadvantages appear when you need to implement work with the DOM. When you need to create scoreboard in 
+single-player game you'll probably do it this way:
 
+```js
+const table = document.createElement('table');
+const headRow = table.createTHead().insertRow();
+const body = table.createTBody();
+const playerRow = tableBody.insertRow();
 
-Good luck & Fun
+table.className = 'scoreboard';
+headRow.className = 'scoreboard__headRow';
+playerRow.className = 'scoreboard__playerRow';
+... // And for each frame create cell; after it you'll update these cells after rolls.
+```
 
-Your devbuddies team :)
+It may be enough for a small application, but when you want to make a really cool and flexible app, 
+you need to think in advance about scalability, maintanability.
+
+And using of React solves this problem for me.
