@@ -1,0 +1,36 @@
+.scoreboard__cell_type_content
+{
+    height: 62px;
+
+    transition: background-color .2s ease-out;
+
+    &.scoreboard__cell
+    {
+        &_active
+        {
+            background: #fffbc3;
+        }
+
+        &_strike
+        {
+            background-color: #b9e8d2;
+        }
+
+        &_spare
+        {
+            background-color: #d6f7dc;
+        }
+    }
+
+    .scoreboard
+    {
+        &__roll
+        {
+            font-size: 13px;
+
+            display: inline-block;
+
+            width: 50%;
+        }
+    }
+}
