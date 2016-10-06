@@ -4,18 +4,19 @@ import React from 'react';
 import '../scoreboard.scss';
 import './scoreboard__cell_type_content.scss';
 
-const ScoreboardCellTypeContent = ({firstRoll, secondRoll, score, isStrike, isSpare, active}) => {
+const ScoreboardCellTypeContent = ({rolls=[], score, isLast, active}) => {
     const className = b('scoreboard', 'cell', {
         active,
-        spare: isSpare,
-        strike: isStrike,
+        last: isLast,
         type: 'content'
     });
 
     return (
         <td className={className}>
-            <div className="scoreboard__roll">{firstRoll}</div>
-            <div className="scoreboard__roll">{secondRoll}</div>
+            <div className="scoreboard__roll">{rolls[0]}</div>
+            <div className="scoreboard__roll">{rolls[1]}</div>
+            {isLast &&
+                <div className="scoreboard__roll">{rolls[2]}</div>}
             <div className="scoreboard__frame-score">{score}</div>
         </td>
     );
@@ -23,11 +24,11 @@ const ScoreboardCellTypeContent = ({firstRoll, secondRoll, score, isStrike, isSp
 
 ScoreboardCellTypeContent.propTypes = {
     active: React.PropTypes.bool.isRequired,
-    firstRoll: React.PropTypes.number,
+    isLast: React.PropTypes.bool,
     isSpare: React.PropTypes.bool,
     isStrike: React.PropTypes.bool,
-    score: React.PropTypes.number,
-    secondRoll: React.PropTypes.number
+    rolls: React.PropTypes.array,
+    score: React.PropTypes.number
 };
 
 export default ScoreboardCellTypeContent;

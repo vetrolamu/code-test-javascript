@@ -2,7 +2,7 @@ import React from 'react';
 
 import Scoreboard from '../scoreboard/scoreboard.jsx';
 
-import { isScoreValid, getCurrentFrame } from './game.functions';
+import { getMaxScore, isScoreValid, getCurrentFrame } from './game.functions';
 
 import './game.scss';
 
@@ -16,7 +16,7 @@ const Game = React.createClass({
         return {
             error: null,
             currentScore: '',
-            currentFrame: {index: 0, score: null},
+            currentFrame: {index: 0, rollIndex: 0, score: null},
             rolls: []
         };
     },
@@ -33,7 +33,7 @@ const Game = React.createClass({
         e.preventDefault();
         const {currentScore, currentFrame, rolls} = this.state;
 
-        if (!isScoreValid(currentScore, currentFrame, GAME_CONFIG.frames)) {
+        if (!isScoreValid(currentScore, currentFrame, GAME_CONFIG.pins)) {
             this.setState({error: 'Wrong value'});
 
             return;
@@ -43,29 +43,28 @@ const Game = React.createClass({
 
         this.setState({
             currentScore: '',
-            currentFrame: getCurrentFrame(currentFrame, numericScore, GAME_CONFIG.pins),
+            currentFrame: getCurrentFrame(currentFrame, numericScore, GAME_CONFIG.pins, GAME_CONFIG.frames),
             rolls: [...rolls, numericScore]
         });
     },
 
     render() {
         const {currentFrame, currentScore, rolls, error} = this.state;
-        const gameInProgress = currentFrame.index < GAME_CONFIG.frames;
 
         return (
             <section className="game">
                 <Scoreboard
-                    currentFrameIndex={currentFrame.index}
+                    currentFrameIndex={currentFrame && currentFrame.index}
                     framesNumber={GAME_CONFIG.frames}
                     pinsNumber={GAME_CONFIG.pins}
                     rolls={rolls} />
                 <div className="game__controls">
-                    {gameInProgress
+                    {currentFrame
                         ? <form onSubmit={this.submitScore}>
                             <h4>Frame #{currentFrame.index + 1}</h4>
                             <input
                                 className="game__score-input"
-                                max={GAME_CONFIG.pins - currentFrame.score}
+                                max={getMaxScore(currentFrame, GAME_CONFIG.pins)}
                                 min="0"
                                 onChange={this.changeScore}
                                 placeholder="enter your score"

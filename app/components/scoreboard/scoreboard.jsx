@@ -8,7 +8,7 @@ import './scoreboard.scss';
 
 const Scoreboard = ({currentFrameIndex, framesNumber, pinsNumber, rolls}) => {
     const frames = new Array(framesNumber).fill(0);
-    const results = getResults(rolls, pinsNumber);
+    const results = getResults(rolls, pinsNumber, framesNumber);
 
     return (
         <table className="scoreboard">
@@ -28,6 +28,7 @@ const Scoreboard = ({currentFrameIndex, framesNumber, pinsNumber, rolls}) => {
                         <ScoreboardCellTypeContent
                             {...results[index]}
                             active={index === currentFrameIndex}
+                            isLast={index === frames.length - 1}
                             key={index} />
                     )}
                     <td className={b('scoreboard', 'cell', {type: 'result'})}>
@@ -40,7 +41,7 @@ const Scoreboard = ({currentFrameIndex, framesNumber, pinsNumber, rolls}) => {
 };
 
 Scoreboard.propTypes = {
-    currentFrameIndex: React.PropTypes.number.isRequired,
+    currentFrameIndex: React.PropTypes.number,
     rolls: React.PropTypes.array.isRequired,
     framesNumber: React.PropTypes.number.isRequired,
     pinsNumber: React.PropTypes.number.isRequired
