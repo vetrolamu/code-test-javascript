@@ -21,6 +21,6 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 app.get('/', reactApp);
 app.listen(PORT, HOST, err => err
-    ? console.error(err)
-    : console.info(`Listening at http://${HOST}:${PORT}`)
+    ? console.error(err) //eslint-disable-line no-console
+    : console.info(`Listening at http://${HOST}:${PORT}`) //eslint-disable-line no-console
 );
