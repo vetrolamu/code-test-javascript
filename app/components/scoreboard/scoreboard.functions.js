@@ -10,37 +10,36 @@ function getSpareBonus(index, rolls) {
  * Returns player's results for every frame
  * @param {Array} rolls
  * @param {Number} pinsNumber
+ * @param {Number} framesNumber
  * @returns {Array}
  */
-export function getResults(rolls, pinsNumber) {
+export function getResults(rolls, pinsNumber, framesNumber) {
     const results = [];
     let resultIndex = 0;
 
     rolls.forEach((score, index) => {
-        // first roll in frame
-        if (results[resultIndex] === undefined) {
-            results[resultIndex] = {
-                firstRoll: score,
-                score
-            };
+        const isFirstRollInFrame = results[resultIndex] === undefined;
 
-            // strike
-            if (score === pinsNumber) {
-                results[resultIndex].isStrike = true;
-                results[resultIndex].score += getStrikeBonus(index, rolls);
-                resultIndex += 1;
-            }
+        results[resultIndex] = results[resultIndex] || {rolls: [], score: 0};
+        results[resultIndex].rolls.push(score);
+        results[resultIndex].score += score;
 
+        // last frame
+        if (resultIndex === framesNumber - 1) {
             return;
         }
 
-        // second roll in frame
-        results[resultIndex].secondRoll = score;
-        results[resultIndex].score += score;
+        if (isFirstRollInFrame) {
+            // strike
+            if (score === pinsNumber) {
+                results[resultIndex].score += getStrikeBonus(index, rolls);
+                resultIndex += 1;
+            }
+            return;
+        }
 
         // spare
         if (results[resultIndex].score === pinsNumber) {
-            results[resultIndex].isSpare = true;
             results[resultIndex].score += getSpareBonus(index, rolls);
         }
 
