@@ -22,6 +22,13 @@ npm install
 npm run dev
 ```
 
+#### Linting
+
+I use [ESLint](http://eslint.org/) as linting utility
+```bash
+npm run lint
+```
+
 ## Why React
 
 You do not need any libraries or tools for implementation of base requirements. For business logic 
