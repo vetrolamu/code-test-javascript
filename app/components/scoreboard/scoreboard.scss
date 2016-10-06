@@ -1,0 +1,19 @@
+.scoreboard
+{
+    font-family: 'Courier New';
+    font-size: 28px;
+
+    margin: 20px 0;
+
+    border-collapse: collapse;
+
+    text-align: center;
+
+    &__cell
+    {
+        width: 72px;
+        padding: 5px;
+
+        border: 1px solid #ccc;
+    }
+}

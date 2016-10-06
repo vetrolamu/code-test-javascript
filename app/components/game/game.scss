@@ -1,5 +1,58 @@
 .game
 {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+
     flex-grow: 1;
     align-self: center;
+
+    &__controls
+    {
+        margin-top: 10px;
+    }
+
+    &__error
+    {
+        font-size: 13px;
+
+        margin-top: 10px;
+
+        color: #ee2545;
+    }
+
+    &__score-input
+    {
+        font-size: 26px;
+
+        width: 10em;
+        padding: 5px;
+
+        text-align: center;
+
+        &::placeholder
+        {
+            transition: opacity .2s ease-out;
+
+            color: rgba(0, 0, 0, .2);
+        }
+
+        &:focus
+        {
+            outline: none;
+
+            &::placeholder
+            {
+                opacity: 0;
+            }
+        }
+    }
+
+    &__restart
+    {
+        font-size: 16px;
+
+        padding: 10px 40px;
+    }
 }
