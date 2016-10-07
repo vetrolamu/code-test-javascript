@@ -1,90 +1,62 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Scoreboard from '../scoreboard/scoreboard.jsx';
-
-import { getMaxScore, isScoreValid, getCurrentFrame } from './game.functions';
+import * as gameActions from '../../redux/actions/game';
 
 import './game.scss';
 
-const GAME_CONFIG = {
-    frames: 10,
-    pins: 10
+const Game = ({currentFrameIndex, currentScore, currentScoreError, dispatch, maxScore}) => {
+    const restartGame = () =>
+        dispatch(gameActions.restartGame());
+    const changeScore = ({target: {value}}) =>
+        dispatch(gameActions.changeScore(value));
+    const submitScore = (e) => {
+        e.preventDefault();
+        dispatch(gameActions.submitScore());
+    };
+
+    return (
+        <section className="game">
+            <Scoreboard />
+            <div className="game__controls">
+                {currentFrameIndex !== null
+                    ? <form onSubmit={submitScore}>
+                        <h4>Frame #{currentFrameIndex + 1}</h4>
+                        <input
+                            className="game__score-input"
+                            max={maxScore}
+                            min="0"
+                            onChange={changeScore}
+                            placeholder="enter your score"
+                            type="number"
+                            value={currentScore} />
+                        {currentScoreError &&
+                            <div className="game__error">{currentScoreError}</div>
+                        }
+                    </form>
+                    : <div>
+                        <h4>Game Over</h4>
+                        <button className="game__restart" onClick={restartGame}>
+                            Start Again
+                        </button>
+                    </div>
+                }
+            </div>
+        </section>
+    );
 };
 
-const Game = React.createClass({
-    getInitialState() {
-        return {
-            error: null,
-            currentScore: '',
-            currentFrame: {index: 0, rollIndex: 0, score: null},
-            rolls: []
-        };
-    },
+Game.propTypes = {
+    currentFrameIndex: React.PropTypes.number,
+    currentScore: React.PropTypes.string,
+    currentScoreError: React.PropTypes.string,
+    dispatch: React.PropTypes.func.isRequired,
+    maxScore: React.PropTypes.number
+};
 
-    restartGame() {
-        this.setState(this.getInitialState());
-    },
+const mapStateToProps = ({game: {currentFrameIndex, currentScore, currentScoreError, maxScore}}) => {
+    return {currentFrameIndex, currentScore, currentScoreError, maxScore};
+};
 
-    changeScore({target: {value}}) {
-        this.setState({currentScore: value, error: null});
-    },
-
-    submitScore(e) {
-        e.preventDefault();
-        const {currentScore, currentFrame, rolls} = this.state;
-
-        if (!isScoreValid(currentScore, currentFrame, GAME_CONFIG.pins)) {
-            this.setState({error: 'Wrong value'});
-
-            return;
-        }
-
-        const numericScore = Number(currentScore);
-
-        this.setState({
-            currentScore: '',
-            currentFrame: getCurrentFrame(currentFrame, numericScore, GAME_CONFIG.pins, GAME_CONFIG.frames),
-            rolls: [...rolls, numericScore]
-        });
-    },
-
-    render() {
-        const {currentFrame, currentScore, rolls, error} = this.state;
-
-        return (
-            <section className="game">
-                <Scoreboard
-                    currentFrameIndex={currentFrame && currentFrame.index}
-                    framesNumber={GAME_CONFIG.frames}
-                    pinsNumber={GAME_CONFIG.pins}
-                    rolls={rolls} />
-                <div className="game__controls">
-                    {currentFrame
-                        ? <form onSubmit={this.submitScore}>
-                            <h4>Frame #{currentFrame.index + 1}</h4>
-                            <input
-                                className="game__score-input"
-                                max={getMaxScore(currentFrame, GAME_CONFIG.pins)}
-                                min="0"
-                                onChange={this.changeScore}
-                                placeholder="enter your score"
-                                type="number"
-                                value={currentScore} />
-                            {error &&
-                                <div className="game__error">{error}</div>
-                            }
-                        </form>
-                        : <div>
-                            <h4>Game Over</h4>
-                            <button className="game__restart" onClick={this.restartGame}>
-                                Start Again
-                            </button>
-                        </div>
-                    }
-                </div>
-            </section>
-        );
-    }
-});
-
-export default Game;
+export default connect(mapStateToProps)(Game);
