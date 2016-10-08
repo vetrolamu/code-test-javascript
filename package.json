@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Scoring system for bowling players",
   "scripts": {
-    "dev": "NODE_ENV=development node ./start",
+    "dev": "NODE_ENV=development node ./start.js",
+    "build": "rm -rf build && webpack --config ./webpack/webpack.config.prod.js",
+    "serve": "NODE_ENV=production node ./start.js",
+    "start": "npm run build && npm run serve",
     "lint": "eslint ./"
   },
   "repository": {
@@ -28,6 +31,7 @@
     "babel-preset-stage-3": "^6.17.0",
     "css-loader": "^0.23.1",
     "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^3.10.1",
     "postcss-loader": "^0.9.1",
     "react": "^15.3.2",
