@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactHotLoaderInjection from 'react-hot-loader/Injection';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
@@ -15,7 +14,7 @@ const rootInstance = render(
 );
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
-    ReactHotLoaderInjection.RootInstanceProvider.injectProvider({
+    require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
         getRootInstances() {
             return [rootInstance];
         }

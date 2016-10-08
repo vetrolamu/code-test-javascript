@@ -3,7 +3,7 @@ import path from 'path';
 import webpack from 'webpack';
 import reactApp from '../app/server.js';
 
-const {NODE_ENV: ENV, PORT=3000, HOST='127.0.0.1'} = process.env;
+const {NODE_ENV: ENV, PORT=3000, HOST='0.0.0.0'} = process.env;
 const app = express();
 
 if (ENV === 'development') {
