@@ -1,62 +1,60 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../button/button.jsx';
 import Scoreboard from '../scoreboard/scoreboard.jsx';
+import ScoringForm from '../scoring-form/scoring-form.jsx';
+import StartingForm from '../starting-form/starting-form.jsx';
 import * as gameActions from '../../redux/actions/game';
 
 import './game.scss';
 
-const Game = ({currentFrameIndex, currentScore, currentScoreError, dispatch, maxScore}) => {
-    const restartGame = () =>
-        dispatch(gameActions.restartGame());
-    const changeScore = ({target: {value}}) =>
-        dispatch(gameActions.changeScore(value));
-    const submitScore = (e) => {
-        e.preventDefault();
-        dispatch(gameActions.submitScore());
-    };
+const Game = ({
+    currentFrameIndex, currentPlayerIndex, dispatch, framesNumber, isConfiguring, playersNumber, results
+}) => {
+    const finishGame = () =>
+        dispatch(gameActions.finishGame());
 
     return (
         <section className="game">
-            <Scoreboard />
-            <div className="game__controls">
-                {currentFrameIndex !== null
-                    ? <form onSubmit={submitScore}>
-                        <h4>Frame #{currentFrameIndex + 1}</h4>
-                        <input
-                            className="game__score-input"
-                            max={maxScore}
-                            min="0"
-                            onChange={changeScore}
-                            placeholder="enter your score"
-                            type="number"
-                            value={currentScore} />
-                        {currentScoreError &&
-                            <div className="game__error">{currentScoreError}</div>
-                        }
-                    </form>
-                    : <div>
-                        <h4>Game Over</h4>
-                        <button className="game__restart" onClick={restartGame}>
-                            Start Again
-                        </button>
-                    </div>
-                }
-            </div>
+            {isConfiguring
+                ? <StartingForm />
+                : <div className="game__progress">
+                    <Scoreboard
+                        currentFrameIndex={currentFrameIndex}
+                        currentPlayerIndex={currentPlayerIndex}
+                        framesNumber={framesNumber}
+                        playersNumber={playersNumber}
+                        results={results} />
+                    {currentFrameIndex === null
+                        ? <Button onClick={finishGame}>Start again</Button>
+                        : <ScoringForm />
+                    }
+                </div>
+            }
         </section>
     );
 };
 
 Game.propTypes = {
     currentFrameIndex: React.PropTypes.number,
-    currentScore: React.PropTypes.string,
-    currentScoreError: React.PropTypes.string,
+    currentPlayerIndex: React.PropTypes.number,
     dispatch: React.PropTypes.func.isRequired,
-    maxScore: React.PropTypes.number
+    framesNumber: React.PropTypes.number,
+    isConfiguring: React.PropTypes.bool,
+    playersNumber: React.PropTypes.string,
+    results: React.PropTypes.array
 };
 
-const mapStateToProps = ({game: {currentFrameIndex, currentScore, currentScoreError, maxScore}}) => {
-    return {currentFrameIndex, currentScore, currentScoreError, maxScore};
+const mapStateToProps = ({game}) => {
+    return {
+        currentFrameIndex: game.currentFrameIndex,
+        currentPlayerIndex: game.currentPlayerIndex,
+        framesNumber: game.framesNumber,
+        isConfiguring: game.isConfiguring,
+        playersNumber: game.playersNumber,
+        results: game.results
+    };
 };
 
 export default connect(mapStateToProps)(Game);
