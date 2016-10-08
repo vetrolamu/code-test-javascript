@@ -22,6 +22,20 @@ npm install
 npm run dev
 ```
 
+#### Production
+
+```bash
+npm run build
+npm run serve
+```
+
+or
+
+```bash
+# npm run build && npm run serve
+npm start
+```
+
 #### Linting
 
 I use [ESLint](http://eslint.org/) as linting utility

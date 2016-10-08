@@ -1,36 +1,39 @@
 const path = require('path');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpackConfigBase = require('./webpack.config.base');
 
 module.exports = Object.assign(webpackConfigBase, {
-    devtool: 'eval',
-    entry: [
-        'webpack-hot-middleware/client',
-        path.resolve(__dirname, '..', 'app', 'client.js')
-    ],
+    entry: path.resolve(__dirname, '..', 'app', 'client.js'),
     output: {
-        path: path.resolve(__dirname, '..', 'app'),
+        path: path.resolve(__dirname, '..', 'build'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('development')
+                NODE_ENV: JSON.stringify('production')
             }
-        })
+        }),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+                warnings: false
+            }
+        }),
+        new ExtractTextPlugin('bundle.css')
     ],
     module: {
         loaders: [
             {
                 test: /\.js$|\.jsx$/,
-                loaders: ['react-hot', 'babel'],
+                loader: 'babel',
                 include: path.resolve(__dirname, '..', 'app')
             },
             {
                 test: /\.scss/,
-                loader: 'style!css!sass!postcss',
+                loader: ExtractTextPlugin.extract('style', 'css!sass!postcss'),
                 include: path.resolve(__dirname, '..', 'app')
             }
         ]

@@ -1,24 +1,32 @@
 import express from 'express';
+import path from 'path';
 import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-
 import reactApp from '../app/server.js';
-import webpackConfigDev from '../webpack/webpack.config.dev';
 
-const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || '127.0.0.1';
+const {NODE_ENV: ENV, PORT=3000, HOST='127.0.0.1'} = process.env;
 const app = express();
-const compiler = webpack(webpackConfigDev);
 
-app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfigDev.output.publicPath,
-    stats: {
-        colors: true
-    }
-}));
-app.use(webpackHotMiddleware(compiler));
+if (ENV === 'development') {
+    const webpackConfigDev = require('../webpack/webpack.config.dev');
+    const compiler = webpack(webpackConfigDev);
+
+    app.use(require('webpack-dev-middleware')(compiler, {
+        noInfo: true,
+        publicPath: webpackConfigDev.output.publicPath,
+        stats: {
+            colors: true
+        }
+    }));
+    app.use(require('webpack-hot-middleware')(compiler));
+} else if (ENV === 'production') {
+    const webpackConfigProd = require('../webpack/webpack.config.prod');
+
+    app.use(
+        webpackConfigProd.output.publicPath,
+        express.static(path.resolve(__dirname, '..', 'build'))
+    );
+}
+
 app.get('/', reactApp);
 app.listen(PORT, HOST, err => err
     ? console.error(err) //eslint-disable-line no-console
