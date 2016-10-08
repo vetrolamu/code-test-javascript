@@ -1,39 +1,45 @@
 import b from 'b_';
 import React from 'react';
-import { connect } from 'react-redux';
 
 import ScoreboardCellTypeContent from './__cell/scoreboard__cell_type_content.jsx';
 
 import './scoreboard.scss';
 
-const Scoreboard = ({currentFrameIndex, framesNumber, results}) => {
+const Scoreboard = ({currentFrameIndex, currentPlayerIndex, framesNumber, playersNumber, results}) => {
     const frames = new Array(framesNumber).fill(0);
+    const players = new Array(Number(playersNumber)).fill(0);
 
     return (
         <table className="scoreboard">
             <thead>
                 <tr>
-                    {frames.map((frame, index) => (
+                    {frames.map((frame, index) =>
                         <th className="scoreboard__cell" key={index}>
                             {index + 1}
                         </th>
-                    ))}
+                    )}
                     <th className="scoreboard__cell" />
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {frames.map((frame, index) =>
-                        <ScoreboardCellTypeContent
-                            {...results[index]}
-                            active={index === currentFrameIndex}
-                            isLast={index === frames.length - 1}
-                            key={index} />
-                    )}
-                    <td className={b('scoreboard', 'cell', {type: 'result'})}>
-                        {results.reduce((sum, {score}) => sum + score, 0)}
-                    </td>
-                </tr>
+                {players.map((player, playerIndex) => {
+                    const playerResult = results[playerIndex] || [];
+
+                    return (
+                        <tr key={playerIndex}>
+                            {frames.map((frame, frameIndex) => (
+                                <ScoreboardCellTypeContent
+                                    {...playerResult[frameIndex]}
+                                    active={frameIndex === currentFrameIndex && playerIndex === currentPlayerIndex}
+                                    isLast={frameIndex === frames.length - 1}
+                                    key={frameIndex} />
+                            ))}
+                            <td className={b('scoreboard', 'cell', {type: 'result'})}>
+                                {playerResult.reduce((sum, {score}) => sum + score, 0)}
+                            </td>
+                        </tr>
+                    );
+                })}
             </tbody>
         </table>
     );
@@ -41,14 +47,10 @@ const Scoreboard = ({currentFrameIndex, framesNumber, results}) => {
 
 Scoreboard.propTypes = {
     currentFrameIndex: React.PropTypes.number,
+    currentPlayerIndex: React.PropTypes.number,
     framesNumber: React.PropTypes.number,
-    pinsNumber: React.PropTypes.number,
+    playersNumber: React.PropTypes.string,
     results: React.PropTypes.array
 };
 
-
-const mapStateToProps = ({game: {currentFrameIndex, framesNumber, pinsNumber, results}}) => {
-    return {currentFrameIndex, framesNumber, pinsNumber, results};
-};
-
-export default connect(mapStateToProps)(Scoreboard);
+export default Scoreboard;

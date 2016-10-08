@@ -1,0 +1,25 @@
+.input
+{
+    font-size: 26px;
+
+    padding: 5px;
+
+    text-align: center;
+
+    &::placeholder
+    {
+        transition: opacity .2s ease-out;
+
+        color: rgba(0, 0, 0, .2);
+    }
+
+    &:focus
+    {
+        outline: none;
+
+        &::placeholder
+        {
+            opacity: 0;
+        }
+    }
+}
