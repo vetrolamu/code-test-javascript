@@ -1,12 +1,14 @@
 import b from 'b_';
 import React from 'react';
 
+import { GAME_CONFIG } from '../../config';
+
 import ScoreboardCellTypeContent from './__cell/scoreboard__cell_type_content.jsx';
 
 import './scoreboard.scss';
 
-const Scoreboard = ({currentFrameIndex, currentPlayerIndex, framesNumber, playersNumber, results}) => {
-    const frames = new Array(framesNumber).fill(0);
+const Scoreboard = ({currentFrameIndex, currentPlayerIndex, playersNumber, results}) => {
+    const frames = new Array(GAME_CONFIG.frames).fill(0);
     const players = new Array(Number(playersNumber)).fill(0);
 
     return (
@@ -48,7 +50,6 @@ const Scoreboard = ({currentFrameIndex, currentPlayerIndex, framesNumber, player
 Scoreboard.propTypes = {
     currentFrameIndex: React.PropTypes.number,
     currentPlayerIndex: React.PropTypes.number,
-    framesNumber: React.PropTypes.number,
     playersNumber: React.PropTypes.string,
     results: React.PropTypes.array
 };

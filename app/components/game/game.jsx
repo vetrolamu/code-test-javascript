@@ -9,9 +9,7 @@ import * as gameActions from '../../redux/actions/game';
 
 import './game.scss';
 
-const Game = ({
-    currentFrameIndex, currentPlayerIndex, dispatch, framesNumber, isConfiguring, playersNumber, results
-}) => {
+const Game = ({currentFrameIndex, currentPlayerIndex, dispatch, isConfiguring, playersNumber, results}) => {
     const finishGame = () =>
         dispatch(gameActions.finishGame());
 
@@ -23,7 +21,6 @@ const Game = ({
                     <Scoreboard
                         currentFrameIndex={currentFrameIndex}
                         currentPlayerIndex={currentPlayerIndex}
-                        framesNumber={framesNumber}
                         playersNumber={playersNumber}
                         results={results} />
                     {currentFrameIndex === null
@@ -40,7 +37,6 @@ Game.propTypes = {
     currentFrameIndex: React.PropTypes.number,
     currentPlayerIndex: React.PropTypes.number,
     dispatch: React.PropTypes.func.isRequired,
-    framesNumber: React.PropTypes.number,
     isConfiguring: React.PropTypes.bool,
     playersNumber: React.PropTypes.string,
     results: React.PropTypes.array
@@ -50,7 +46,6 @@ const mapStateToProps = ({game}) => {
     return {
         currentFrameIndex: game.currentFrameIndex,
         currentPlayerIndex: game.currentPlayerIndex,
-        framesNumber: game.framesNumber,
         isConfiguring: game.isConfiguring,
         playersNumber: game.playersNumber,
         results: game.results
