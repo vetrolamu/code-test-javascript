@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { GAME_CONFIG } from '../../config';
 
 import Input from '../input/input.jsx';
 import ErrorMessage from '../error-message/error-message.jsx';
@@ -7,7 +8,7 @@ import * as gameActions from '../../redux/actions/game';
 
 import './starting-form.scss';
 
-const ScoringForm = ({dispatch, playersError, maxPlayers, minPlayers, playersNumber}) => {
+const ScoringForm = ({dispatch, playersError, playersNumber}) => {
     const startGame = (e) => {
         e.preventDefault();
         dispatch(gameActions.startGame());
@@ -19,8 +20,8 @@ const ScoringForm = ({dispatch, playersError, maxPlayers, minPlayers, playersNum
         <form className="starting-form" onSubmit={startGame}>
             <h4>Start Game</h4>
             <Input
-                max={maxPlayers}
-                min={minPlayers}
+                max={GAME_CONFIG.maxPlayers}
+                min={GAME_CONFIG.minPlayers}
                 onChange={changePlayers}
                 placeholder="enter number of players"
                 type="number"
@@ -34,13 +35,11 @@ const ScoringForm = ({dispatch, playersError, maxPlayers, minPlayers, playersNum
 
 ScoringForm.propTypes = {
     dispatch: React.PropTypes.func,
-    maxPlayers: React.PropTypes.number,
-    minPlayers: React.PropTypes.number,
     playersError: React.PropTypes.string,
     playersNumber: React.PropTypes.string
 };
 
-const mapStateToProps = ({game: {maxPlayers, minPlayers, playersError, playersNumber}}) =>
-    ({maxPlayers, minPlayers, playersError, playersNumber});
+const mapStateToProps = ({game: {playersError, playersNumber}}) =>
+    ({playersError, playersNumber});
 
 export default connect(mapStateToProps)(ScoringForm);

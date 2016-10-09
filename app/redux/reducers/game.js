@@ -1,22 +1,13 @@
+import { GAME_CONFIG } from '../../config';
 import * as constants from '../constants/game';
-
-const GAME_CONFIG = {
-    frames: 10,
-    maxPlayers: 5,
-    minPlayers: 1,
-    pins: 10
-};
 
 const initialState = {
     currentFrameIndex: null,
     currentPlayerIndex: null,
     currentScore: '',
     currentScoreError: null,
-    framesNumber: GAME_CONFIG.frames,
     isConfiguring: true,
-    maxPlayers: GAME_CONFIG.maxPlayers,
     maxScore: GAME_CONFIG.pins,
-    minPlayers: GAME_CONFIG.minPlayers,
     playersError: null,
     playersNumber: '',
     results: []
