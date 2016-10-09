@@ -25,7 +25,10 @@ const initialState = {
 const resultUpdaters = (function() {
     let list = [];
     const updater = {
-        waitingList: [],
+        init() {
+            this.waitingList = [];
+            return this;
+        },
         updateFromWaitingList(results, score) {
             this.waitingList = this.waitingList
                 .map(item => {
@@ -80,7 +83,7 @@ const resultUpdaters = (function() {
     return {
         get(playerIndex) {
             if (list[playerIndex] === undefined) {
-                list[playerIndex] = Object.create(updater);
+                list[playerIndex] = Object.create(updater).init();
             }
 
             return list[playerIndex];
@@ -114,37 +117,53 @@ function isNumericInputValid({value, min, max}) {
     );
 }
 
-function getNextPosition(results, playerIndex, playersNumber) {
-    const lastIndex = results.length - 1;
-    const lastResult = results[lastIndex];
-    const isLastFrame = lastIndex === GAME_CONFIG.frames - 1;
-    const isLastPlayer = playerIndex === playersNumber - 1;
+function shouldMoveNext(playerResult) {
+    return playerResult[playerResult.length - 1].closed;
+}
 
-    if (isLastFrame && isLastPlayer) {
-        return lastResult.closed
-            ? [null, null]
-            : [lastIndex, playerIndex];
+function getNextPlayerIndex(playerIndex, playersNumber, frameIndex) {
+    if (playerIndex < playersNumber - 1) {
+        return playerIndex + 1;
     }
 
-    if (lastResult.closed) {
-        return isLastPlayer
-            ? [lastIndex + 1, 0]
-            : [lastIndex, playerIndex + 1];
+    return frameIndex === GAME_CONFIG.frames - 1
+        ? null
+        : 0;
+}
+
+function getNextFrameIndex(frameIndex, nextPlayerIndex) {
+    if (nextPlayerIndex === 0) {
+        return frameIndex + 1;
+    }
+    if (nextPlayerIndex === null) {
+        return null;
     }
 
-    return [lastIndex, playerIndex];
+    return frameIndex;
+}
+
+function getNextPosition(playerResults, playerIndex, frameIndex, playersNumber) {
+    if (!shouldMoveNext(playerResults)) {
+        return [frameIndex, playerIndex];
+    }
+
+    const nextPlayerIndex = getNextPlayerIndex(playerIndex, playersNumber, frameIndex);
+    const nextFrameIndex = getNextFrameIndex(frameIndex, nextPlayerIndex);
+
+    return [nextFrameIndex, nextPlayerIndex];
 }
 
 function submitScore(state) {
     const playerResults = resultUpdaters
         .get(state.currentPlayerIndex)
         .update(state.results[state.currentPlayerIndex], Number(state.currentScore), state.currentFrameIndex);
+    const results = Object.assign([], state.results, {[state.currentPlayerIndex]: playerResults});
     const [nextFrameIndex, nextPlayerIndex] = getNextPosition(
         playerResults,
         state.currentPlayerIndex,
+        state.currentFrameIndex,
         Number(state.playersNumber)
     );
-    const results = Object.assign([], state.results, {[state.currentPlayerIndex]: playerResults});
     const nextMaxScore = getMaxScore(results[nextPlayerIndex] && results[nextPlayerIndex][nextFrameIndex]);
 
     return {
