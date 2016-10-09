@@ -14,7 +14,7 @@ const initialState = {
     waitingList: []
 };
 
-function isLastFrameClosed(frame) {
+export function isLastFrameClosed(frame) {
     const rollsNumber = frame.rolls.length;
 
     return (
@@ -23,7 +23,7 @@ function isLastFrameClosed(frame) {
     );
 }
 
-function updateResultsByWaitingList(prevResults=[], prevWaitingList=[], score) {
+export function updateResultsByWaitingList(prevResults=[], prevWaitingList=[], score) {
     const results = prevResults.slice();
     const waitingList = prevWaitingList
         .map(item => {
@@ -46,6 +46,7 @@ export function updateResultsByScore(prevResults=[], prevWaitingList=[], score) 
     results[index] = results[index] || {rolls: [], score: 0};
     results[index].rolls.push(score);
     results[index].score += score;
+    results[index].closed = false;
 
     // last frame
     if (index === GAME_CONFIG.frames - 1) {
