@@ -10,82 +10,70 @@ const initialState = {
     maxScore: GAME_CONFIG.pins,
     playersError: null,
     playersNumber: '',
-    results: []
+    results: [],
+    waitingList: []
 };
 
-const resultUpdaters = (function() {
-    let list = [];
-    const updater = {
-        init() {
-            this.waitingList = [];
-            return this;
-        },
-        updateFromWaitingList(results, score) {
-            this.waitingList = this.waitingList
-                .map(item => {
-                    results[item.index].score += score;
-                    return {index: item.index, times: item.times - 1};
-                })
-                .filter(({times}) => times > 0);
+function isLastFrameClosed(frame) {
+    const rollsNumber = frame.rolls.length;
 
-            return results;
-        },
-        update(oldResults = [], score, index) {
-            let results = oldResults.slice();
-            const isFirstRollInFrame = !results[index];
+    return (
+        rollsNumber === 3 ||
+        rollsNumber === 2 && frame.score < GAME_CONFIG.pins
+    );
+}
 
-            results = this.updateFromWaitingList(results, score);
-            results[index] = results[index] || {rolls: [], score: 0};
-            results[index].rolls.push(score);
-            results[index].score += score;
+function updateResultsByWaitingList(prevResults=[], prevWaitingList=[], score) {
+    const results = prevResults.slice();
+    const waitingList = prevWaitingList
+        .map(item => {
+            results[item.index].score += score;
+            return {index: item.index, times: item.times - 1};
+        })
+        .filter(({times}) => times > 0);
 
-            // last frame
-            if (index === GAME_CONFIG.frames - 1) {
-                const rollsNumber = results[index].rolls.length;
+    return [results, waitingList];
+}
 
-                results[index].closed = (
-                    rollsNumber === 3 ||
-                    rollsNumber === 2 && results[index].score < GAME_CONFIG.pins
-                );
+export function updateResultsByScore(prevResults=[], prevWaitingList=[], score) {
+    let results = prevResults.slice();
+    let waitingList = prevWaitingList.slice();
+    const lastIndex = results.length - 1;
+    const index = !results[lastIndex] || results[lastIndex].closed
+        ? lastIndex + 1
+        : lastIndex;
 
-                return results;
-            }
+    results[index] = results[index] || {rolls: [], score: 0};
+    results[index].rolls.push(score);
+    results[index].score += score;
 
-            if (isFirstRollInFrame) {
-                // strike
-                if (score === GAME_CONFIG.pins) {
-                    this.waitingList.push({index, times: 2});
-                    results[index].closed = true;
-                }
-                return results;
-            }
+    // last frame
+    if (index === GAME_CONFIG.frames - 1) {
+        results[index].closed = isLastFrameClosed(results[index]);
 
-            // spare
-            if (results[index].score === GAME_CONFIG.pins) {
-                this.waitingList.push({index, times: 1});
-            }
+        return [results, waitingList];
+    }
 
+    if (results[index].rolls.length === 1) {
+        // strike
+        if (score === GAME_CONFIG.pins) {
+            waitingList.push({index, times: 2});
             results[index].closed = true;
-
-            return results;
         }
-    };
+        return [results, waitingList];
+    }
 
-    return {
-        get(playerIndex) {
-            if (list[playerIndex] === undefined) {
-                list[playerIndex] = Object.create(updater).init();
-            }
+    // spare
+    if (results[index].score === GAME_CONFIG.pins) {
+        waitingList.push({index, times: 1});
+    }
 
-            return list[playerIndex];
-        },
-        clear() {
-            list = [];
-        }
-    };
-}());
+    results[index].closed = true;
 
-function getMaxScore(frame) {
+    return [results, waitingList];
+}
+
+export function getMaxScore(frame) {
     if (frame && (frame.score % GAME_CONFIG.pins)) {
         return frame.rolls.length === 2
             ? 2 * GAME_CONFIG.pins - frame.score
@@ -95,7 +83,7 @@ function getMaxScore(frame) {
     return GAME_CONFIG.pins;
 }
 
-function isNumericInputValid({value, min, max}) {
+export function isNumericInputValid({value, min, max}) {
     if (value === '') {
         return false;
     }
@@ -108,8 +96,8 @@ function isNumericInputValid({value, min, max}) {
     );
 }
 
-function shouldMoveNext(playerResult) {
-    return playerResult[playerResult.length - 1].closed;
+function shouldMoveNext(playerResults) {
+    return playerResults[playerResults.length - 1].closed;
 }
 
 function getNextPlayerIndex(playerIndex, playersNumber, frameIndex) {
@@ -133,7 +121,9 @@ function getNextFrameIndex(frameIndex, nextPlayerIndex) {
     return frameIndex;
 }
 
-function getNextPosition(playerResults, playerIndex, frameIndex, playersNumber) {
+export function getNextPosition(playerResults, playerIndex, playersNumber) {
+    const frameIndex = playerResults.length - 1;
+
     if (!shouldMoveNext(playerResults)) {
         return [frameIndex, playerIndex];
     }
@@ -145,14 +135,18 @@ function getNextPosition(playerResults, playerIndex, frameIndex, playersNumber) 
 }
 
 function submitScore(state) {
-    const playerResults = resultUpdaters
-        .get(state.currentPlayerIndex)
-        .update(state.results[state.currentPlayerIndex], Number(state.currentScore), state.currentFrameIndex);
+    let playerResults = state.results[state.currentPlayerIndex];
+    let playerWaitingList = state.waitingList[state.currentPlayerIndex];
+    let numericScore = Number(state.currentScore);
+
+    [playerResults, playerWaitingList] = updateResultsByWaitingList(playerResults, playerWaitingList, numericScore);
+    [playerResults, playerWaitingList] = updateResultsByScore(playerResults, playerWaitingList, numericScore);
+
     const results = Object.assign([], state.results, {[state.currentPlayerIndex]: playerResults});
+    const waitingList = Object.assign([], state.waitingList, {[state.currentPlayerIndex]: playerWaitingList});
     const [nextFrameIndex, nextPlayerIndex] = getNextPosition(
         playerResults,
         state.currentPlayerIndex,
-        state.currentFrameIndex,
         Number(state.playersNumber)
     );
     const nextMaxScore = getMaxScore(results[nextPlayerIndex] && results[nextPlayerIndex][nextFrameIndex]);
@@ -160,6 +154,7 @@ function submitScore(state) {
     return {
         ...state,
         results,
+        waitingList,
         maxScore: nextMaxScore,
         currentFrameIndex: nextFrameIndex,
         currentPlayerIndex: nextPlayerIndex,
@@ -190,8 +185,6 @@ export default (state=initialState, action) => {
             return {...state, playersNumber: action.playersNumber, playersError: null};
 
         case constants.FINISH_GAME:
-            resultUpdaters.clear();
-
             return {...initialState};
 
         default:
