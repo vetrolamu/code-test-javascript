@@ -25,8 +25,6 @@ const ScoreboardCellTypeContent = ({rolls=[], score, isLast, active}) => {
 ScoreboardCellTypeContent.propTypes = {
     active: React.PropTypes.bool.isRequired,
     isLast: React.PropTypes.bool,
-    isSpare: React.PropTypes.bool,
-    isStrike: React.PropTypes.bool,
     rolls: React.PropTypes.array,
     score: React.PropTypes.number
 };
