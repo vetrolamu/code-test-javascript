@@ -1,9 +1,5 @@
 .input
 {
-    font-size: 26px;
-
-    padding: 5px;
-
     text-align: center;
 
     &::placeholder
@@ -20,6 +16,22 @@
         &::placeholder
         {
             opacity: 0;
+        }
+    }
+
+    &_size
+    {
+        &_m
+        {
+            font-size: 16px;
+
+            padding: 5px;
+        }
+        &_l
+        {
+            font-size: 24px;
+
+            padding: 10px;
         }
     }
 }

@@ -29,3 +29,12 @@ body
 
     flex-grow: 1;
 }
+
+input,
+select,
+textarea,
+button
+{
+    font-family: inherit;
+    font-size: inherit;
+}

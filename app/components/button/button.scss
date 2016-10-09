@@ -1,6 +1,43 @@
 .button
 {
-    font-size: 26px;
-
     padding: 10px 30px;
+
+    transition: background .2s ease-out;
+
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    background-color: #f7f7f7;
+    box-shadow: 0 0 0 1px #ccc inset;
+
+    &:hover
+    {
+        transition: none;
+
+        background-color: #eee;
+    }
+
+    &:active
+    {
+        transition: none;
+
+        background-color: #ddd;
+    }
+
+    &_size
+    {
+        &_m
+        {
+            font-size: 16px;
+
+            padding: 10px 20px;
+        }
+
+        &_l
+        {
+            font-size: 24px;
+
+            padding: 10px 40px;
+        }
+    }
 }
