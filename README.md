@@ -37,9 +37,17 @@ or
 npm start
 ```
 
+#### Unit Tests
+
+I use [Jest](https://facebook.github.io/jest/) for tests. I'm not guru here but it looks like powerful tool.
+
+```bash
+npm run test
+```
+
 #### Linting
 
-I use [ESLint](http://eslint.org/) as linting utility
+I use [ESLint](http://eslint.org/) as linting utility.
 ```bash
 npm run lint
 ```
