@@ -1,0 +1,6 @@
+{
+  "moduleNameMapper": {
+    "^.+\\.(scss|css|less)$": "<rootDir>/tests/styleMock.js",
+    "^.+\\.(png|jpg|jpeg|gif|svg|woff|woff2)$": "<rootDir>/tests/fileMock.js"
+  }
+}
