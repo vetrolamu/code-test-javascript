@@ -135,10 +135,14 @@ export function getNextPosition(playerResults, playerIndex, playersNumber) {
     return [nextFrameIndex, nextPlayerIndex];
 }
 
-function submitScore(state) {
+function getRandomScore(maxScore) {
+    return Math.floor(Math.random() * (maxScore + 1));
+}
+
+function submitScore(state, score) {
     let playerResults = state.results[state.currentPlayerIndex];
     let playerWaitingList = state.waitingList[state.currentPlayerIndex];
-    let numericScore = Number(state.currentScore);
+    let numericScore = score || Number(state.currentScore);
 
     [playerResults, playerWaitingList] = updateResultsByWaitingList(playerResults, playerWaitingList, numericScore);
     [playerResults, playerWaitingList] = updateResultsByScore(playerResults, playerWaitingList, numericScore);
@@ -159,11 +163,12 @@ function submitScore(state) {
         maxScore: nextMaxScore,
         currentFrameIndex: nextFrameIndex,
         currentPlayerIndex: nextPlayerIndex,
-        currentScore: ''
+        currentScore: '',
+        currentScoreError: null
     };
 }
 
-export default (state=initialState, action) => {
+export default (state=initialState, action) => { // eslint-disable-line complexity
     switch (action.type) {
         case constants.START_GAME:
             if (!isNumericInputValid({value: state.playersNumber, min: state.minPlayers, max: state.maxPlayers})) {
@@ -178,6 +183,11 @@ export default (state=initialState, action) => {
             }
 
             return submitScore(state);
+
+        case constants.SUBMIT_RANDOM_SCORE:
+            const score = getRandomScore(state.maxScore);
+
+            return submitScore(state, score);
 
         case constants.CHANGE_SCORE:
             return {...state, currentScore: action.score, currentScoreError: null};

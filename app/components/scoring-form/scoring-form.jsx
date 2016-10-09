@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Input from '../input/input.jsx';
+import Button from '../button/button.jsx';
 import ErrorMessage from '../error-message/error-message.jsx';
 import * as gameActions from '../../redux/actions/game';
 
@@ -14,6 +15,8 @@ const ScoringForm = ({currentFrameIndex, currentPlayerIndex, currentScore, dispa
         e.preventDefault();
         dispatch(gameActions.submitScore());
     };
+    const submitRandomScore = () =>
+        dispatch(gameActions.submitRandomScore());
 
     return (
         <form className="scoring-form" onSubmit={submitScore}>
@@ -23,11 +26,17 @@ const ScoringForm = ({currentFrameIndex, currentPlayerIndex, currentScore, dispa
                 min="0"
                 onChange={changeScore}
                 placeholder="enter your score"
+                size="l"
                 type="number"
                 value={currentScore} />
             {currentScoreError &&
                 <ErrorMessage>{currentScoreError}</ErrorMessage>
             }
+            <div className="scoring-form__random-throw">
+                <Button onClick={submitRandomScore} type="button">
+                    Random throw (0 — {maxScore})
+                </Button>
+            </div>
         </form>
     );
 };

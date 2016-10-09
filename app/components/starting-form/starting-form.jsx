@@ -24,6 +24,7 @@ const ScoringForm = ({dispatch, playersError, playersNumber}) => {
                 min={GAME_CONFIG.minPlayers}
                 onChange={changePlayers}
                 placeholder="enter number of players"
+                size="l"
                 type="number"
                 value={playersNumber} />
             {playersError &&

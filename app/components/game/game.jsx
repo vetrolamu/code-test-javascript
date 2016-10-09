@@ -24,7 +24,7 @@ const Game = ({currentFrameIndex, currentPlayerIndex, dispatch, isConfiguring, p
                         playersNumber={playersNumber}
                         results={results} />
                     {currentFrameIndex === null
-                        ? <Button onClick={finishGame}>Start again</Button>
+                        ? <Button onClick={finishGame} size="l">Start again</Button>
                         : <ScoringForm />
                     }
                 </div>
