@@ -8,5 +8,7 @@ export const finishGame = () =>
     ({type: constants.FINISH_GAME});
 export const submitScore = () =>
     ({type: constants.SUBMIT_SCORE});
+export const submitRandomScore = () =>
+    ({type: constants.SUBMIT_RANDOM_SCORE});
 export const changePlayers = (playersNumber) =>
     ({type: constants.CHANGE_PLAYERS, playersNumber});
