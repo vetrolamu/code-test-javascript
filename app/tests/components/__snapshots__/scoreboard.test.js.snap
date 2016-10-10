@@ -1,0 +1,563 @@
+exports[`Scoreboard Scoreboard 1`] = `
+<table
+  className="scoreboard">
+  <thead>
+    <tr>
+      <th
+        className="scoreboard__cell">
+        1
+      </th>
+      <th
+        className="scoreboard__cell">
+        2
+      </th>
+      <th
+        className="scoreboard__cell">
+        3
+      </th>
+      <th
+        className="scoreboard__cell">
+        4
+      </th>
+      <th
+        className="scoreboard__cell">
+        5
+      </th>
+      <th
+        className="scoreboard__cell">
+        6
+      </th>
+      <th
+        className="scoreboard__cell">
+        7
+      </th>
+      <th
+        className="scoreboard__cell">
+        8
+      </th>
+      <th
+        className="scoreboard__cell">
+        9
+      </th>
+      <th
+        className="scoreboard__cell">
+        10
+      </th>
+      <th
+        className="scoreboard__cell" />
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td
+        className="scoreboard__cell scoreboard__cell_active scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_last scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score" />
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_result">
+        0
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Scoreboard Scoreboard 2`] = `
+<table
+  className="scoreboard">
+  <thead>
+    <tr>
+      <th
+        className="scoreboard__cell">
+        1
+      </th>
+      <th
+        className="scoreboard__cell">
+        2
+      </th>
+      <th
+        className="scoreboard__cell">
+        3
+      </th>
+      <th
+        className="scoreboard__cell">
+        4
+      </th>
+      <th
+        className="scoreboard__cell">
+        5
+      </th>
+      <th
+        className="scoreboard__cell">
+        6
+      </th>
+      <th
+        className="scoreboard__cell">
+        7
+      </th>
+      <th
+        className="scoreboard__cell">
+        8
+      </th>
+      <th
+        className="scoreboard__cell">
+        9
+      </th>
+      <th
+        className="scoreboard__cell">
+        10
+      </th>
+      <th
+        className="scoreboard__cell" />
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          2
+        </div>
+        <div
+          className="scoreboard__roll">
+          3
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          5
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          10
+        </div>
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score">
+          24
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          10
+        </div>
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score">
+          20
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          4
+        </div>
+        <div
+          className="scoreboard__roll">
+          6
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          15
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__roll">
+          2
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          7
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          4
+        </div>
+        <div
+          className="scoreboard__roll">
+          6
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          20
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          10
+        </div>
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score">
+          14
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          3
+        </div>
+        <div
+          className="scoreboard__roll">
+          1
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          4
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          20
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_last scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          10
+        </div>
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__roll">
+          1
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          16
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_result">
+        145
+      </td>
+    </tr>
+    <tr>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          4
+        </div>
+        <div
+          className="scoreboard__roll">
+          6
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          15
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          20
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          10
+        </div>
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score">
+          20
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          3
+        </div>
+        <div
+          className="scoreboard__roll">
+          7
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          11
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          1
+        </div>
+        <div
+          className="scoreboard__roll">
+          9
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          13
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          3
+        </div>
+        <div
+          className="scoreboard__roll">
+          1
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          4
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          3
+        </div>
+        <div
+          className="scoreboard__roll">
+          7
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          20
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          10
+        </div>
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score">
+          16
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__roll">
+          1
+        </div>
+        <div
+          className="scoreboard__frame-score">
+          6
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_active scoreboard__cell_last scoreboard__cell_type_content">
+        <div
+          className="scoreboard__roll">
+          5
+        </div>
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__roll" />
+        <div
+          className="scoreboard__frame-score">
+          5
+        </div>
+      </td>
+      <td
+        className="scoreboard__cell scoreboard__cell_type_result">
+        130
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Scoreboard ScoreboardCellContent renders correctly 1`] = `
+<td
+  className="scoreboard__cell scoreboard__cell_type_content">
+  <div
+    className="scoreboard__roll" />
+  <div
+    className="scoreboard__roll" />
+  <div
+    className="scoreboard__frame-score" />
+</td>
+`;
+
+exports[`Scoreboard ScoreboardCellContent renders correctly 2`] = `
+<td
+  className="scoreboard__cell scoreboard__cell_active scoreboard__cell_type_content">
+  <div
+    className="scoreboard__roll">
+    5
+  </div>
+  <div
+    className="scoreboard__roll">
+    5
+  </div>
+  <div
+    className="scoreboard__frame-score">
+    14
+  </div>
+</td>
+`;
+
+exports[`Scoreboard ScoreboardCellContent renders correctly 3`] = `
+<td
+  className="scoreboard__cell scoreboard__cell_active scoreboard__cell_last scoreboard__cell_type_content">
+  <div
+    className="scoreboard__roll">
+    5
+  </div>
+  <div
+    className="scoreboard__roll">
+    5
+  </div>
+  <div
+    className="scoreboard__roll">
+    3
+  </div>
+  <div
+    className="scoreboard__frame-score">
+    13
+  </div>
+</td>
+`;
