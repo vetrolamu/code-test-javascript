@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { GAME_CONFIG } from '../../config';
 
+import Button from '../button/button.jsx';
 import Input from '../input/input.jsx';
 import ErrorMessage from '../error-message/error-message.jsx';
 import * as gameActions from '../../redux/actions/game';
@@ -18,15 +19,20 @@ const ScoringForm = ({dispatch, playersError, playersNumber}) => {
 
     return (
         <form className="starting-form" onSubmit={startGame}>
-            <h4>Start Game</h4>
             <Input
                 max={GAME_CONFIG.maxPlayers}
                 min={GAME_CONFIG.minPlayers}
                 onChange={changePlayers}
                 placeholder="enter number of players"
+                required
                 size="l"
                 type="number"
                 value={playersNumber} />
+            <div className="starting-form__submit">
+                <Button action size="l" type="submit">
+                    Go!
+                </Button>
+            </div>
             {playersError &&
                 <ErrorMessage>{playersError}</ErrorMessage>
             }

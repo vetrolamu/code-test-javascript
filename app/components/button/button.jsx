@@ -4,7 +4,7 @@ import React from 'react';
 import './button.scss';
 
 const Button = (props) => (
-    <button className={b('button', {size: props.size})} {...props} />
+    <button className={b('button', {size: props.size, action: props.action})} {...props} />
 );
 
 Button.defaultProps = {
@@ -12,6 +12,7 @@ Button.defaultProps = {
 };
 
 Button.propTypes = {
+    action: React.PropTypes.bool,
     size: React.PropTypes.string
 };
 

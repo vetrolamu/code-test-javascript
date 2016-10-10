@@ -26,14 +26,18 @@ const ScoringForm = ({currentFrameIndex, currentPlayerIndex, currentScore, dispa
                 min="0"
                 onChange={changeScore}
                 placeholder="enter your score"
+                required
                 size="l"
                 type="number"
                 value={currentScore} />
-            {currentScoreError &&
+            <Button action size="l" type="submit">
+                Submit
+            </Button>
+                {currentScoreError &&
                 <ErrorMessage>{currentScoreError}</ErrorMessage>
             }
             <div className="scoring-form__random-throw">
-                <Button onClick={submitRandomScore} type="button">
+                <Button size="s" onClick={submitRandomScore} type="button">
                     Random throw (0 — {maxScore})
                 </Button>
             </div>

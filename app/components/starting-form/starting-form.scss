@@ -1,7 +1,16 @@
 .starting-form
 {
-    .input
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 120px;
+
+    flex-grow: 1;
+    justify-content: center;
+
+    .input,
+    .button
     {
-        width: 15em;
+        width: 350px;
     }
 }

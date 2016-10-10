@@ -1,17 +1,17 @@
 .scoring-form
 {
-    .input
-    {
-        width: 10em;
-    }
-
     &__random-throw
     {
-        margin-top: 30px;
+        margin-top: 20px;
 
         .button
         {
-            width: 15em;
+            width: 180px;
         }
+    }
+
+    .input
+    {
+        width: 10em;
     }
 }

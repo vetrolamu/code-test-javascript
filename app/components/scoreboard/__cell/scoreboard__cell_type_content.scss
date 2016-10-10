@@ -1,6 +1,7 @@
 .scoreboard__cell_type_content
 {
-    height: 64px;
+    box-sizing: border-box;
+    height: 74px;
 
     transition: background-color .2s ease-out;
 
@@ -13,7 +14,6 @@
             display: inline-block;
 
             width: 50%;
-            height: 50%;
         }
 
         &__frame-score
