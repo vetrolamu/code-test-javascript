@@ -2,7 +2,7 @@ import {
     getMaxScore,
     isNumericInputValid,
     getNextPosition,
-    updateResultsByWaitingList,
+    updateWaitingResultsByScore,
     updateResultsByScore,
     isLastFrameClosed
 } from '../../../redux/reducers/game';
@@ -70,87 +70,58 @@ describe('Game Reducer', () => {
             .toEqual([2, 0]);
     });
 
-    it('updateResultsByWaitingList works correctly', () => {
+    it('updateWaitingResultsByScore works correctly', () => {
 
-        expect(updateResultsByWaitingList(undefined, undefined, 0))
-            .toEqual([[], []]);
-        expect(updateResultsByWaitingList(
-            [{rolls: [4, 6], score: 10, closed: true}],
-            [{index: 0, times: 1}],
+        expect(updateWaitingResultsByScore(undefined, 0))
+            .toEqual([]);
+        expect(updateWaitingResultsByScore(
+            [{rolls: [4, 6], score: 10, closed: true, waiting: 1}],
             4
         ))
             .toEqual([
-                [{rolls: [4, 6], score: 14, closed: true}],
-                []
+                {rolls: [4, 6], score: 14, closed: true}
             ]);
-        expect(updateResultsByWaitingList(
-            [{rolls: [10], score: 10, closed: true}],
-            [{index: 0, times: 2}],
-            4
-        ))
-            .toEqual([
-                [{rolls: [10], score: 14, closed: true}],
-                [{index: 0, times: 1}]
-            ]);
-        expect(updateResultsByWaitingList(
-            [
-                {rolls: [10], score: 20, closed: true},
-                {rolls: [10], score: 10, closed: true}
-            ],
-            [
-                {index: 0, times: 2},
-                {index: 1, times: 2}
+        expect(updateWaitingResultsByScore([
+                {rolls: [10], score: 10, closed: true, waiting: 2}
             ],
             4
         ))
             .toEqual([
-                [
-                    {rolls: [10], score: 24, closed: true},
-                    {rolls: [10], score: 14, closed: true}
-                ],
-                [
-                    {index: 0, times: 1},
-                    {index: 1, times: 1}
-                ]
+                {rolls: [10], score: 14, closed: true, waiting: 1}
+            ]);
+        expect(updateWaitingResultsByScore([
+                {rolls: [10], score: 20, closed: true, waiting: 1},
+                {rolls: [10], score: 10, closed: true, waiting: 2}
+            ],
+            4
+        ))
+            .toEqual([
+                {rolls: [10], score: 24, closed: true},
+                {rolls: [10], score: 14, closed: true,  waiting: 1}
             ]);
     });
     it('updateResultsByScore works correctly', () => {
-        expect(updateResultsByScore(undefined, undefined, 0))
-            .toEqual([[{rolls: [0], score: 0, closed: false}], []]);
+        expect(updateResultsByScore(undefined, 0))
+            .toEqual([{rolls: [0], score: 0, closed: false}]);
         expect(updateResultsByScore(
-            [{rolls: [10], score: 10, closed: true}],
-            [{index: 0, times: 1}],
+            [{rolls: [10], score: 10, closed: true, waiting: 1}],
             10
         ))
             .toEqual([
-                [
-                    {rolls: [10], score: 10, closed: true},
-                    {rolls: [10], score: 10, closed: true}
-                ],
-                [
-                    {index: 0, times: 1},
-                    {index: 1, times: 2}
-                ]
+                {rolls: [10], score: 10, closed: true, waiting: 1},
+                {rolls: [10], score: 10, closed: true, waiting: 2}
             ]);
-        expect(updateResultsByScore(
-            [
-                {rolls: [10], score: 10, closed: true},
+        expect(updateResultsByScore([
+                {rolls: [10], score: 10, closed: true, waiting: 1},
                 {rolls: [3], score: 3, closed: false}
             ],
-            [],
             7
         ))
             .toEqual([
-                [
-                    {rolls: [10], score: 10, closed: true},
-                    {rolls: [3, 7], score: 10, closed: true}
-                ],
-                [
-                    {index: 1, times: 1}
-                ]
+                {rolls: [10], score: 10, closed: true, waiting: 1},
+                {rolls: [3, 7], score: 10, closed: true, waiting: 1}
             ]);
-        expect(updateResultsByScore(
-            [
+        expect(updateResultsByScore([
                 {rolls: [10], score: 10, closed: true}, // 1
                 {rolls: [10], score: 10, closed: true}, // 2
                 {rolls: [10], score: 10, closed: true}, // 3
@@ -159,26 +130,22 @@ describe('Game Reducer', () => {
                 {rolls: [10], score: 10, closed: true}, // 6
                 {rolls: [10], score: 10, closed: true}, // 7
                 {rolls: [10], score: 10, closed: true}, // 8
-                {rolls: [10], score: 10, closed: true}, // 9
+                {rolls: [10], score: 10, closed: true, waiting: 1}, // 9
                 {rolls: [4], score: 4, closed: false} // 10
             ],
-            [],
             6
         ))
             .toEqual([
-                [
-                    {rolls: [10], score: 10, closed: true}, // 1
-                    {rolls: [10], score: 10, closed: true}, // 2
-                    {rolls: [10], score: 10, closed: true}, // 3
-                    {rolls: [10], score: 10, closed: true}, // 4
-                    {rolls: [10], score: 10, closed: true}, // 5
-                    {rolls: [10], score: 10, closed: true}, // 6
-                    {rolls: [10], score: 10, closed: true}, // 7
-                    {rolls: [10], score: 10, closed: true}, // 8
-                    {rolls: [10], score: 10, closed: true}, // 9
-                    {rolls: [4, 6], score: 10, closed: false} // 10
-                ],
-                []
+                {rolls: [10], score: 10, closed: true}, // 1
+                {rolls: [10], score: 10, closed: true}, // 2
+                {rolls: [10], score: 10, closed: true}, // 3
+                {rolls: [10], score: 10, closed: true}, // 4
+                {rolls: [10], score: 10, closed: true}, // 5
+                {rolls: [10], score: 10, closed: true}, // 6
+                {rolls: [10], score: 10, closed: true}, // 7
+                {rolls: [10], score: 10, closed: true}, // 8
+                {rolls: [10], score: 10, closed: true, waiting: 1}, // 9
+                {rolls: [4, 6], score: 10, closed: false} // 10
             ]);
     });
     it('isLastFrameClosed works correctly', () => {
