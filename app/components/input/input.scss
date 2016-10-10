@@ -1,6 +1,11 @@
 .input
 {
+    box-sizing: border-box;
+
     text-align: center;
+
+    border: none;
+    box-shadow: 0 0 0 1px #ccc;
 
     &::placeholder
     {

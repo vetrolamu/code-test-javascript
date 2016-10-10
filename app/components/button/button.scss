@@ -1,14 +1,15 @@
 .button
 {
+    box-sizing: border-box;
+    margin: 0;
     padding: 10px 30px;
 
     transition: background .2s ease-out;
 
     border: none;
-    border-radius: 2px;
     outline: none;
     background-color: #f7f7f7;
-    box-shadow: 0 0 0 1px #ccc inset;
+    box-shadow: 0 0 0 1px #ccc;
 
     &:hover
     {
@@ -24,8 +25,29 @@
         background-color: #ddd;
     }
 
+    &_action
+    {
+        background-color: #fffbc3;
+
+        &:hover
+        {
+            background-color: #ffee74;
+        }
+        &:active
+        {
+            background-color: #ffd75c;
+        }
+    }
+
     &_size
     {
+        &_s
+        {
+            font-size: 13px;
+
+            padding: 5px 10px;
+        }
+
         &_m
         {
             font-size: 16px;
