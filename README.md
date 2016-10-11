@@ -13,8 +13,9 @@ https://bowling-scoring.herokuapp.com/
 1. Use [Immutable.js](https://facebook.github.io/immutable-js/). It fits perfectly to Redux and pure functions 
 2. Store data in Local Storage and restore state of the application
 3. Update webpack configs (using of images for example)
-4. Use server render. Not sure it is necessary now, but when the app will grow, it will greatly reduce
-the time of first render.
+4. Create `scss`-file for common things: colors, sizes, mixins (e.g. clearfix)
+5. Use server render. Not sure it is necessary now, but when the app will grow, it will greatly reduce
+the time of first render. 
 
 ## Instructions
 
