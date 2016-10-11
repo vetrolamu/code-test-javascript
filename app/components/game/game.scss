@@ -3,10 +3,16 @@
     display: flex;
     flex-direction: column;
 
-    margin: 20px 0 60px;
-
-    text-align: center;
-
     flex-grow: 1;
-    align-self: center;
+
+    &__progress
+    {
+        display: flex;
+        flex-direction: column;
+
+        text-align: center;
+
+        align-items: center;
+        align-self: center;
+    }
 }

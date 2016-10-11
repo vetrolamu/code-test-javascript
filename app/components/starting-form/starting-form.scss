@@ -1,10 +1,36 @@
+$headerHeight: 110px;
+
 .starting-form
 {
     display: flex;
     flex-direction: column;
 
+    margin-bottom: $headerHeight;
+
     flex-grow: 1;
-    justify-content: center;
+
+    &__header
+    {
+        font-size: 20px;
+
+        height: $headerHeight;
+        margin: 0;
+        padding: 0 20px;
+
+        text-align: right;
+
+        color: #ccc;
+    }
+
+    &__content
+    {
+        display: flex;
+        flex-direction: column;
+
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+    }
 
     .input,
     .button
