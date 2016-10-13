@@ -10,8 +10,7 @@ const initialState = {
     maxScore: GAME_CONFIG.pins,
     playersError: null,
     playersNumber: '',
-    results: [],
-    waitingList: []
+    results: []
 };
 
 export function isLastFrameClosed(frame) {
@@ -23,21 +22,23 @@ export function isLastFrameClosed(frame) {
     );
 }
 
-export function updateResultsByWaitingList(prevResults=[], prevWaitingList=[], score) {
-    const results = prevResults.slice();
-    const waitingList = prevWaitingList
-        .map(item => {
-            results[item.index].score += score;
-            return {index: item.index, times: item.times - 1};
-        })
-        .filter(({times}) => times > 0);
+export function updateWaitingResultsByScore(results=[], score) {
+    return results.map(item => {
+        if (item.waiting > 0) {
+            item.score += score;
+            item.waiting -= 1;
 
-    return [results, waitingList];
+            if (item.waiting === 0) {
+                delete item.waiting;
+            }
+        }
+
+        return item;
+    });
 }
 
-export function updateResultsByScore(prevResults=[], prevWaitingList=[], score) {
+export function updateResultsByScore(prevResults=[], score) {
     let results = prevResults.slice();
-    let waitingList = prevWaitingList.slice();
     const lastIndex = results.length - 1;
     const index = !results[lastIndex] || results[lastIndex].closed
         ? lastIndex + 1
@@ -52,26 +53,26 @@ export function updateResultsByScore(prevResults=[], prevWaitingList=[], score) 
     if (index === GAME_CONFIG.frames - 1) {
         results[index].closed = isLastFrameClosed(results[index]);
 
-        return [results, waitingList];
+        return results;
     }
 
     if (results[index].rolls.length === 1) {
         // strike
         if (score === GAME_CONFIG.pins) {
-            waitingList.push({index, times: 2});
             results[index].closed = true;
+            results[index].waiting = 2;
         }
-        return [results, waitingList];
+        return results;
     }
 
     // spare
     if (results[index].score === GAME_CONFIG.pins) {
-        waitingList.push({index, times: 1});
+        results[index].waiting = 1;
     }
 
     results[index].closed = true;
 
-    return [results, waitingList];
+    return results;
 }
 
 export function getMaxScore(frame) {
@@ -141,14 +142,12 @@ function getRandomScore(maxScore) {
 
 function submitScore(state, score) {
     let playerResults = state.results[state.currentPlayerIndex];
-    let playerWaitingList = state.waitingList[state.currentPlayerIndex];
     let numericScore = score || Number(state.currentScore);
 
-    [playerResults, playerWaitingList] = updateResultsByWaitingList(playerResults, playerWaitingList, numericScore);
-    [playerResults, playerWaitingList] = updateResultsByScore(playerResults, playerWaitingList, numericScore);
+    playerResults = updateWaitingResultsByScore(playerResults, numericScore);
+    playerResults = updateResultsByScore(playerResults, numericScore);
 
     const results = Object.assign([], state.results, {[state.currentPlayerIndex]: playerResults});
-    const waitingList = Object.assign([], state.waitingList, {[state.currentPlayerIndex]: playerWaitingList});
     const [nextFrameIndex, nextPlayerIndex] = getNextPosition(
         playerResults,
         state.currentPlayerIndex,
@@ -159,7 +158,6 @@ function submitScore(state, score) {
     return {
         ...state,
         results,
-        waitingList,
         maxScore: nextMaxScore,
         currentFrameIndex: nextFrameIndex,
         currentPlayerIndex: nextPlayerIndex,
